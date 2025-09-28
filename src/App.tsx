@@ -11,6 +11,8 @@ import { Branding } from './pages/Branding';
 import { History } from './pages/History';
 import { Analytics } from './pages/Analytics';
 import { Settings } from './pages/Settings';
+import { DataUpload } from './pages/DataUpload';
+import { Scheduling } from './pages/Scheduling';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated } = useAuthStore();
@@ -38,6 +40,22 @@ function App() {
         element={
           <ProtectedRoute>
             <Dashboard />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/data-upload" 
+        element={
+          <ProtectedRoute>
+            <DataUpload />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/scheduling" 
+        element={
+          <ProtectedRoute>
+            <Scheduling />
           </ProtectedRoute>
         } 
       />

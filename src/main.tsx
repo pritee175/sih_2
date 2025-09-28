@@ -33,21 +33,22 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           toastOptions={{
             duration: 4000,
             style: {
-              background: '#363636',
-              color: '#fff',
+              background: '#ffffff',
+              color: '#111827',
+              border: '1px solid #e5e7eb',
             },
             success: {
               duration: 3000,
               iconTheme: {
-                primary: '#22c55e',
-                secondary: '#fff',
+                primary: '#16a34a',
+                secondary: '#ffffff',
               },
             },
             error: {
               duration: 5000,
               iconTheme: {
-                primary: '#ef4444',
-                secondary: '#fff',
+                primary: '#dc2626',
+                secondary: '#ffffff',
               },
             },
           }}

@@ -181,6 +181,25 @@ export const handlers = [
       expires_at: new Date(Date.now() + 60 * 60 * 1000).toISOString()
     });
   }),
+
+  // Ingestion endpoint (CSV Upload)
+  http.post('/api/ingest/:source', async ({ params, request }) => {
+    // Simulate processing delay
+    await new Promise(resolve => setTimeout(resolve, 600));
+    // For mocks, we won't parse the CSV; just return a plausible validation summary
+    const source = params.source as string;
+    const samplePreview = [
+      { id: 'T01', metric: 0.92, ts: '2025-09-18T09:00:00Z' },
+      { id: 'T02', metric: 0.87, ts: '2025-09-18T09:05:00Z' },
+    ];
+    return HttpResponse.json({
+      status: 'ok',
+      rows_ingested: 120,
+      warnings: source === 'other' ? ['Unknown columns ignored: col_x'] : [],
+      errors: [],
+      preview: samplePreview,
+    });
+  }),
 ];
 
 

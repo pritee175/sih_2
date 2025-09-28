@@ -5,9 +5,6 @@ import { FleetOverview } from '../components/dashboard/FleetOverview';
 import { RecentAlerts } from '../components/dashboard/RecentAlerts';
 import { useKPIs } from '../hooks/useApi';
 import { 
-  Clock, 
-  DollarSign, 
-  Eye, 
   BarChart3,
   TrendingUp,
   Activity
@@ -51,49 +48,6 @@ export const Dashboard: React.FC = () => {
           <p className="text-gray-600 mt-1">
             Overview of train induction planning and fleet operations
           </p>
-        </div>
-
-        {/* KPI Widgets */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <KPIWidget
-            title="Punctuality"
-            value={kpis.punctuality.on_time_percentage}
-            target={kpis.punctuality.target_percentage}
-            trend={kpis.punctuality.trend}
-            format="percentage"
-            icon={<Clock className="h-5 w-5" />}
-            description="On-time induction percentage"
-          />
-          
-          <KPIWidget
-            title="Cost Savings"
-            value={kpis.maintenance_cost.savings_estimate}
-            target={kpis.maintenance_cost.target_savings}
-            trend={kpis.maintenance_cost.trend}
-            format="currency"
-            icon={<DollarSign className="h-5 w-5" />}
-            description="Maintenance cost reduction"
-          />
-          
-          <KPIWidget
-            title="Transparency"
-            value={kpis.transparency.auto_explained_percentage}
-            target={kpis.transparency.target_percentage}
-            trend={kpis.transparency.trend}
-            format="percentage"
-            icon={<Eye className="h-5 w-5" />}
-            description="Auto-explained decisions"
-          />
-          
-          <KPIWidget
-            title="Depot Utilization"
-            value={kpis.depot_utilization.average}
-            target={85}
-            trend="stable"
-            format="percentage"
-            icon={<BarChart3 className="h-5 w-5" />}
-            description="Average depot utilization"
-          />
         </div>
 
         {/* Fleet Overview and Recent Alerts */}

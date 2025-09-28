@@ -190,6 +190,23 @@ export const api = {
     });
     return handleResponse<{ download_url: string; filename: string; expires_at: string }>(response);
   },
+
+  // Ingestion endpoint (CSV upload)
+  async ingestUpload(source: string, file: File): Promise<{
+    status: 'ok' | 'error';
+    rows_ingested: number;
+    warnings: string[];
+    errors: Array<{ row: number; message: string }>;
+    preview?: Array<Record<string, any>>;
+  }> {
+    const form = new FormData();
+    form.append('file', file);
+    const response = await fetch(`${API_BASE_URL}/ingest/${encodeURIComponent(source)}`, {
+      method: 'POST',
+      body: form,
+    });
+    return handleResponse(response);
+  },
 };
 
 export { ApiError };
