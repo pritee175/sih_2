@@ -65,7 +65,6 @@ describe('Utility Functions', () => {
     it('returns correct colors for different depots', () => {
       expect(getDepotColor('A')).toContain('blue');
       expect(getDepotColor('B')).toContain('green');
-      expect(getDepotColor('C')).toContain('purple');
     });
   });
 

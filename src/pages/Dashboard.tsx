@@ -10,8 +10,11 @@ import {
   Activity
 } from 'lucide-react';
 import { Loader2 } from 'lucide-react';
+import { useAuthStore } from '../store/useAuthStore';
 
 export const Dashboard: React.FC = () => {
+  // Import auth store to get user
+  const user = useAuthStore((state) => state.user);
   const { data: kpis, isLoading, error } = useKPIs();
 
   if (isLoading) {
@@ -45,7 +48,15 @@ export const Dashboard: React.FC = () => {
       <div className="space-y-8">
         {/* Page Header */}
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+          <h1 className="text-3xl font-bold text-gray-900">
+            {user ? (
+              <>
+                Welcome back, {user.name} <span className="text-primary-600">({user.role})</span>
+              </>
+            ) : (
+              'Dashboard'
+            )}
+          </h1>
           <p className="text-gray-600 mt-1">
             Overview of train induction planning and fleet operations
           </p>

@@ -1,6 +1,6 @@
 export interface Trainset {
   id: string;
-  depot: 'A' | 'B' | 'C';
+  depot: 'A' | 'B';
   mileage_km: number;
   last_maintenance: string;
   maintenance_flag: boolean;
@@ -118,10 +118,9 @@ export interface KPIMetrics {
     trend: 'up' | 'down' | 'stable';
   };
   depot_utilization: {
-    depot_a: number;
-    depot_b: number;
-    depot_c: number;
-    average: number;
+  depot_a: number;
+  depot_b: number;
+  average: number;
   };
 }
 
@@ -129,7 +128,6 @@ export interface SimulationParams {
   depot_availability: {
     depot_a: boolean;
     depot_b: boolean;
-    depot_c: boolean;
   };
   unavailable_trains: string[];
   fitness_overrides: Record<string, number>;
@@ -158,7 +156,7 @@ export interface SimulationResult {
 export interface User {
   id: string;
   username: string;
-  role: 'supervisor' | 'operator' | 'admin';
+  role: 'Operations Control Manager' | 'Rolling Stock Manager' | 'Maintenance Engineer' | 'Rolling Stock Inspector' | 'Signaling & Telecom Engineer' | 'Branding & Commercial Manager';
   name: string;
   depot_access: string[];
   permissions: string[];

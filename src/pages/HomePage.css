@@ -1,0 +1,178 @@
+.homepage-container {
+  display: flex;
+  min-height: 100vh;
+  background: #f4f6f8;
+}
+.homepage-left {
+  flex: 1;
+  background: #0a3d62;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+.metro-logo {
+  width: 120px;
+  margin-bottom: 24px;
+}
+.homepage-tagline {
+  margin: 16px 0 32px 0;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+.official-link {
+  color: #fff;
+  background: #1dd1a1;
+  padding: 8px 20px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: 500;
+  margin-top: 24px;
+  transition: background 0.2s;
+}
+.official-link:hover {
+  background: #10ac84;
+}
+.homepage-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+}
+.auth-card {
+  background: #f8fafc;
+  border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+  padding: 32px 28px;
+  width: 100%;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.auth-card h2 {
+  margin-bottom: 18px;
+  color: #0a3d62;
+}
+.auth-card input {
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+.auth-card button {
+  background: #0a3d62;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: background 0.2s;
+}
+.auth-card button:hover {
+  background: #145374;
+}
+.switch-auth {
+  text-align: center;
+  font-size: 0.95rem;
+  color: #555;
+}
+.demo-credentials {
+  background: #eafaf1;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin: 12px 0 8px 0;
+  color: #145374;
+}.homepage-container {
+  display: flex;
+  min-height: 100vh;
+  background: #f4f6f8;
+}
+.homepage-left {
+  flex: 1;
+  background: #0a3d62;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+.metro-logo {
+  width: 120px;
+  margin-bottom: 24px;
+}
+.homepage-tagline {
+  margin: 16px 0 32px 0;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+.official-link {
+  color: #fff;
+  background: #1dd1a1;
+  padding: 8px 20px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: 500;
+  margin-top: 24px;
+  transition: background 0.2s;
+}
+.official-link:hover {
+  background: #10ac84;
+}
+.homepage-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+}
+.auth-card {
+  background: #f8fafc;
+  border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+  padding: 32px 28px;
+  width: 100%;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.auth-card h2 {
+  margin-bottom: 18px;
+  color: #0a3d62;
+}
+.auth-card input {
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+.auth-card button {
+  background: #0a3d62;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: background 0.2s;
+}
+.auth-card button:hover {
+  background: #145374;
+}
+.switch-auth {
+  text-align: center;
+  font-size: 0.95rem;
+  color: #555;
+}

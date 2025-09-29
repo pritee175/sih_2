@@ -3,37 +3,34 @@ import { Trainset, MaintenanceJob, Alert, BrandingCampaign, KPIMetrics, User } f
 export const mockTrainsets: Trainset[] = [
   { id: 'T01', depot: 'A', mileage_km: 125000, last_maintenance: '2025-08-10', maintenance_flag: false, fitness_score: 0.92, branding_campaign: 'AdCampaign1', available: true, model: 'Metro-3000', capacity: 300 },
   { id: 'T02', depot: 'A', mileage_km: 98000, last_maintenance: '2025-09-01', maintenance_flag: false, fitness_score: 0.88, branding_campaign: 'AdCampaign2', available: true, model: 'Metro-3000', capacity: 300 },
-  { id: 'T03', depot: 'B', mileage_km: 156000, last_maintenance: '2025-07-15', maintenance_flag: true, fitness_score: 0.95, branding_campaign: 'AdCampaign1', available: true, model: 'Metro-3000', capacity: 300 },
-  { id: 'T04', depot: 'B', mileage_km: 87000, last_maintenance: '2025-09-05', maintenance_flag: false, fitness_score: 0.91, available: true, model: 'Metro-3000', capacity: 300 },
-  { id: 'T05', depot: 'C', mileage_km: 198000, last_maintenance: '2025-06-20', maintenance_flag: true, fitness_score: 0.78, branding_campaign: 'AdCampaign3', available: false, model: 'Metro-3000', capacity: 300 },
-  { id: 'T06', depot: 'A', mileage_km: 67000, last_maintenance: '2025-09-10', maintenance_flag: false, fitness_score: 0.96, available: true, model: 'Metro-3000', capacity: 300 },
-  { id: 'T07', depot: 'C', mileage_km: 145000, last_maintenance: '2025-08-25', maintenance_flag: false, fitness_score: 0.89, branding_campaign: 'AdCampaign2', available: true, model: 'Metro-3000', capacity: 300 },
-  { id: 'T08', depot: 'B', mileage_km: 112000, last_maintenance: '2025-08-30', maintenance_flag: false, fitness_score: 0.93, available: true, model: 'Metro-3000', capacity: 300 },
-  { id: 'T09', depot: 'A', mileage_km: 234000, last_maintenance: '2025-05-15', maintenance_flag: true, fitness_score: 0.72, branding_campaign: 'AdCampaign1', available: false, model: 'Metro-3000', capacity: 300 },
-  { id: 'T10', depot: 'C', mileage_km: 89000, last_maintenance: '2025-09-08', maintenance_flag: false, fitness_score: 0.94, available: true, model: 'Metro-3000', capacity: 300 },
-  { id: 'T11', depot: 'B', mileage_km: 167000, last_maintenance: '2025-07-30', maintenance_flag: false, fitness_score: 0.87, branding_campaign: 'AdCampaign3', available: true, model: 'Metro-3000', capacity: 300 },
-  { id: 'T12', depot: 'A', mileage_km: 76000, last_maintenance: '2025-09-12', maintenance_flag: false, fitness_score: 0.45, branding_campaign: 'AdCampaign2', available: false, model: 'Metro-3000', capacity: 300 },
-  { id: 'T13', depot: 'C', mileage_km: 134000, last_maintenance: '2025-08-15', maintenance_flag: false, fitness_score: 0.91, available: true, model: 'Metro-3000', capacity: 300 },
-  { id: 'T14', depot: 'B', mileage_km: 189000, last_maintenance: '2025-06-10', maintenance_flag: true, fitness_score: 0.68, available: true, model: 'Metro-3000', capacity: 300 },
-  { id: 'T15', depot: 'A', mileage_km: 102000, last_maintenance: '2025-09-03', maintenance_flag: false, fitness_score: 0.89, branding_campaign: 'AdCampaign1', available: true, model: 'Metro-3000', capacity: 300 },
-  { id: 'T16', depot: 'C', mileage_km: 178000, last_maintenance: '2025-07-05', maintenance_flag: false, fitness_score: 0.83, branding_campaign: 'AdCampaign2', available: true, model: 'Metro-3000', capacity: 300 },
-  { id: 'T17', depot: 'B', mileage_km: 56000, last_maintenance: '2025-09-15', maintenance_flag: false, fitness_score: 0.97, available: true, model: 'Metro-3000', capacity: 300 },
-  { id: 'T18', depot: 'A', mileage_km: 143000, last_maintenance: '2025-08-20', maintenance_flag: false, fitness_score: 0.86, branding_campaign: 'AdCampaign3', available: true, model: 'Metro-3000', capacity: 300 },
-  { id: 'T19', depot: 'C', mileage_km: 201000, last_maintenance: '2025-05-25', maintenance_flag: true, fitness_score: 0.71, available: false, model: 'Metro-3000', capacity: 300 },
-  { id: 'T20', depot: 'B', mileage_km: 97000, last_maintenance: '2025-09-06', maintenance_flag: false, fitness_score: 0.92, branding_campaign: 'AdCampaign1', available: true, model: 'Metro-3000', capacity: 300 },
-  { id: 'T21', depot: 'A', mileage_km: 165000, last_maintenance: '2025-07-20', maintenance_flag: false, fitness_score: 0.84, branding_campaign: 'AdCampaign2', available: true, model: 'Metro-3000', capacity: 300 },
-  { id: 'T22', depot: 'C', mileage_km: 78000, last_maintenance: '2025-09-11', maintenance_flag: false, fitness_score: 0.95, available: true, model: 'Metro-3000', capacity: 300 },
-  { id: 'T23', depot: 'B', mileage_km: 147000, last_maintenance: '2025-08-05', maintenance_flag: false, fitness_score: 0.88, branding_campaign: 'AdCampaign3', available: true, model: 'Metro-3000', capacity: 300 },
-  { id: 'T24', depot: 'A', mileage_km: 116000, last_maintenance: '2025-08-28', maintenance_flag: false, fitness_score: 0.90, branding_campaign: 'AdCampaign1', available: true, model: 'Metro-3000', capacity: 300 },
-  { id: 'T25', depot: 'C', mileage_km: 82000, last_maintenance: '2025-09-09', maintenance_flag: false, fitness_score: 0.93, branding_campaign: 'AdCampaign2', available: true, model: 'Metro-3000', capacity: 300 },
+  { id: 'T03', depot: 'A', mileage_km: 156000, last_maintenance: '2025-07-15', maintenance_flag: true, fitness_score: 0.95, branding_campaign: 'AdCampaign1', available: true, model: 'Metro-3000', capacity: 300 },
+  { id: 'T04', depot: 'A', mileage_km: 87000, last_maintenance: '2025-09-05', maintenance_flag: false, fitness_score: 0.91, available: true, model: 'Metro-3000', capacity: 300 },
+  { id: 'T05', depot: 'A', mileage_km: 67000, last_maintenance: '2025-09-10', maintenance_flag: false, fitness_score: 0.96, available: true, model: 'Metro-3000', capacity: 300 },
+  { id: 'T06', depot: 'A', mileage_km: 234000, last_maintenance: '2025-05-15', maintenance_flag: true, fitness_score: 0.72, branding_campaign: 'AdCampaign1', available: false, model: 'Metro-3000', capacity: 300 },
+  { id: 'T07', depot: 'A', mileage_km: 76000, last_maintenance: '2025-09-12', maintenance_flag: false, fitness_score: 0.45, branding_campaign: 'AdCampaign2', available: false, model: 'Metro-3000', capacity: 300 },
+  { id: 'T08', depot: 'A', mileage_km: 102000, last_maintenance: '2025-09-03', maintenance_flag: false, fitness_score: 0.89, branding_campaign: 'AdCampaign1', available: true, model: 'Metro-3000', capacity: 300 },
+  { id: 'T09', depot: 'A', mileage_km: 143000, last_maintenance: '2025-08-20', maintenance_flag: false, fitness_score: 0.86, branding_campaign: 'AdCampaign3', available: true, model: 'Metro-3000', capacity: 300 },
+  { id: 'T10', depot: 'A', mileage_km: 165000, last_maintenance: '2025-07-20', maintenance_flag: false, fitness_score: 0.84, branding_campaign: 'AdCampaign2', available: true, model: 'Metro-3000', capacity: 300 },
+  { id: 'T11', depot: 'A', mileage_km: 116000, last_maintenance: '2025-08-28', maintenance_flag: false, fitness_score: 0.90, branding_campaign: 'AdCampaign1', available: true, model: 'Metro-3000', capacity: 300 },
+  { id: 'T12', depot: 'B', mileage_km: 189000, last_maintenance: '2025-06-10', maintenance_flag: true, fitness_score: 0.68, available: true, model: 'Metro-3000', capacity: 300 },
+  { id: 'T13', depot: 'B', mileage_km: 56000, last_maintenance: '2025-09-15', maintenance_flag: false, fitness_score: 0.97, available: true, model: 'Metro-3000', capacity: 300 },
+  { id: 'T14', depot: 'B', mileage_km: 97000, last_maintenance: '2025-09-06', maintenance_flag: false, fitness_score: 0.92, branding_campaign: 'AdCampaign1', available: true, model: 'Metro-3000', capacity: 300 },
+  { id: 'T15', depot: 'B', mileage_km: 147000, last_maintenance: '2025-08-05', maintenance_flag: false, fitness_score: 0.88, branding_campaign: 'AdCampaign3', available: true, model: 'Metro-3000', capacity: 300 },
+  { id: 'T16', depot: 'B', mileage_km: 116000, last_maintenance: '2025-08-28', maintenance_flag: false, fitness_score: 0.90, branding_campaign: 'AdCampaign1', available: true, model: 'Metro-3000', capacity: 300 },
+  { id: 'T17', depot: 'B', mileage_km: 125000, last_maintenance: '2025-08-10', maintenance_flag: false, fitness_score: 0.92, branding_campaign: 'AdCampaign1', available: true, model: 'Metro-3000', capacity: 300 },
+  { id: 'T18', depot: 'B', mileage_km: 98000, last_maintenance: '2025-09-01', maintenance_flag: false, fitness_score: 0.88, branding_campaign: 'AdCampaign2', available: true, model: 'Metro-3000', capacity: 300 },
+  { id: 'T19', depot: 'B', mileage_km: 156000, last_maintenance: '2025-07-15', maintenance_flag: true, fitness_score: 0.95, branding_campaign: 'AdCampaign1', available: true, model: 'Metro-3000', capacity: 300 },
+  { id: 'T20', depot: 'B', mileage_km: 87000, last_maintenance: '2025-09-05', maintenance_flag: false, fitness_score: 0.91, available: true, model: 'Metro-3000', capacity: 300 },
+  { id: 'T21', depot: 'B', mileage_km: 67000, last_maintenance: '2025-09-10', maintenance_flag: false, fitness_score: 0.96, available: true, model: 'Metro-3000', capacity: 300 },
+  { id: 'T22', depot: 'B', mileage_km: 234000, last_maintenance: '2025-05-15', maintenance_flag: true, fitness_score: 0.72, branding_campaign: 'AdCampaign1', available: false, model: 'Metro-3000', capacity: 300 },
+  { id: 'T23', depot: 'B', mileage_km: 76000, last_maintenance: '2025-09-12', maintenance_flag: false, fitness_score: 0.45, branding_campaign: 'AdCampaign2', available: false, model: 'Metro-3000', capacity: 300 },
+  { id: 'T24', depot: 'B', mileage_km: 102000, last_maintenance: '2025-09-03', maintenance_flag: false, fitness_score: 0.89, branding_campaign: 'AdCampaign1', available: true, model: 'Metro-3000', capacity: 300 },
 ];
 
 export const mockMaintenanceJobs: MaintenanceJob[] = [
-  { id: 'M01', train_id: 'T07', status: 'pending', expected_days: 2, depot: 'B', priority: 'medium', description: 'Brake system inspection', assigned_crew: 'Crew-B1' },
+  { id: 'M01', train_id: 'T03', status: 'pending', expected_days: 2, depot: 'B', priority: 'medium', description: 'Brake system inspection', assigned_crew: 'Crew-B1' },
   { id: 'M02', train_id: 'T14', status: 'in_progress', expected_days: 5, depot: 'B', priority: 'high', description: 'Engine overhaul', assigned_crew: 'Crew-B2', start_date: '2025-09-15' },
-  { id: 'M03', train_id: 'T19', status: 'pending', expected_days: 3, depot: 'C', priority: 'urgent', description: 'Safety system check', assigned_crew: 'Crew-C1' },
   { id: 'M04', train_id: 'T09', status: 'completed', expected_days: 4, depot: 'A', priority: 'high', description: 'Body panel replacement', assigned_crew: 'Crew-A1', start_date: '2025-09-10', completion_date: '2025-09-14' },
-  { id: 'M05', train_id: 'T05', status: 'in_progress', expected_days: 6, depot: 'C', priority: 'medium', description: 'Interior refurbishment', assigned_crew: 'Crew-C2', start_date: '2025-09-12' },
 ];
 
 export const mockAlerts: Alert[] = [
@@ -66,15 +63,27 @@ export const mockKPIMetrics: KPIMetrics = {
     trend: 'up'
   },
   depot_utilization: {
-    depot_a: 78.5,
-    depot_b: 82.3,
-    depot_c: 75.8,
-    average: 78.9
+    depot_a: 80.0,
+    depot_b: 80.0,
+    average: 80.0
   }
 };
 
 export const mockUsers: User[] = [
-  { id: 'U01', username: 'supervisor1', role: 'supervisor', name: 'John Kumar', depot_access: ['A', 'B', 'C'], permissions: ['view_all', 'make_decisions', 'override_ai', 'export_data'] },
-  { id: 'U02', username: 'operator1', role: 'operator', name: 'Priya Nair', depot_access: ['A'], permissions: ['view_depot', 'view_reports'] },
-  { id: 'U03', username: 'admin1', role: 'admin', name: 'Rajesh Menon', depot_access: ['A', 'B', 'C'], permissions: ['view_all', 'make_decisions', 'override_ai', 'export_data', 'manage_users', 'system_config'] },
+  {
+    id: 'U01',
+    username: 'ramesh',
+    role: 'Maintenance Engineer',
+    name: 'Ramesh Kumar',
+    depot_access: ['A', 'B'],
+    permissions: ['view_all', 'make_decisions', 'override_ai', 'export_data']
+  },
+  {
+    id: 'U02',
+    username: 'dilip',
+    role: 'Operations Control Manager',
+    name: 'Dilip Singh',
+    depot_access: ['A', 'B'],
+    permissions: ['view_all', 'make_decisions', 'override_ai', 'export_data']
+  },
 ];

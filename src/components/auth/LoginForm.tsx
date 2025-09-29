@@ -129,8 +129,8 @@ export const LoginForm: React.FC = () => {
                 <AlertCircle className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
                 <div className="text-sm text-blue-800">
                   <p className="font-medium mb-1">Demo Credentials:</p>
-                  <p>Username: <code className="bg-blue-100 px-1 rounded">supervisor1</code></p>
-                  <p>Password: <code className="bg-blue-100 px-1 rounded">password</code></p>
+                  <p>Username: <code className="bg-blue-100 px-1 rounded">ramesh</code> | Password: <code className="bg-blue-100 px-1 rounded">ramesh123</code></p>
+                  <p>Username: <code className="bg-blue-100 px-1 rounded">dilip</code> | Password: <code className="bg-blue-100 px-1 rounded">dilip123</code></p>
                 </div>
               </div>
             </div>

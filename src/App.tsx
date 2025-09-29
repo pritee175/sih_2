@@ -2,6 +2,8 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuthStore } from './store/useAuthStore';
 import { LoginForm } from './components/auth/LoginForm';
+import HomePage from './pages/HomePage';
+import SignupPage from './pages/SignupPage';
 import { Dashboard } from './pages/Dashboard';
 import { InductionDecisions } from './pages/InductionDecisions';
 import { Maintenance } from './pages/Maintenance';
@@ -30,10 +32,18 @@ function App() {
   return (
     <Routes>
       <Route 
+        path="/" 
+        element={<HomePage />} 
+      />
+      <Route 
         path="/login" 
         element={
           isAuthenticated ? <Navigate to="/dashboard" replace /> : <LoginForm />
         } 
+      />
+      <Route 
+        path="/signup" 
+        element={<SignupPage />} 
       />
       <Route 
         path="/dashboard" 
@@ -124,12 +134,8 @@ function App() {
         } 
       />
       <Route 
-        path="/" 
-        element={<Navigate to="/dashboard" replace />} 
-      />
-      <Route 
         path="*" 
-        element={<Navigate to="/dashboard" replace />} 
+        element={<Navigate to="/" replace />} 
       />
     </Routes>
   );

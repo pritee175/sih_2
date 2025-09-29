@@ -23,7 +23,6 @@ export const Analytics: React.FC = () => {
   const depotUtilizationData = [
     { name: 'Depot A', utilization: kpis?.depot_utilization.depot_a || 0 },
     { name: 'Depot B', utilization: kpis?.depot_utilization.depot_b || 0 },
-    { name: 'Depot C', utilization: kpis?.depot_utilization.depot_c || 0 },
   ];
 
   const decisionTrendData = [

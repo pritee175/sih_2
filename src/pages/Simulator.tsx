@@ -20,8 +20,7 @@ export const Simulator: React.FC = () => {
   const [simulationParams, setSimulationParams] = useState({
     depot_availability: {
       depot_a: true,
-      depot_b: true,
-      depot_c: true
+      depot_b: true
     },
     unavailable_trains: [] as string[],
     fitness_overrides: {} as Record<string, number>
@@ -44,8 +43,7 @@ export const Simulator: React.FC = () => {
     setSimulationParams({
       depot_availability: {
         depot_a: true,
-        depot_b: true,
-        depot_c: true
+        depot_b: true
       },
       unavailable_trains: [],
       fitness_overrides: {}
@@ -53,7 +51,7 @@ export const Simulator: React.FC = () => {
     setResults(null);
   };
 
-  const toggleDepot = (depot: 'depot_a' | 'depot_b' | 'depot_c') => {
+  const toggleDepot = (depot: 'depot_a' | 'depot_b') => {
     setSimulationParams(prev => ({
       ...prev,
       depot_availability: {
@@ -88,7 +86,7 @@ export const Simulator: React.FC = () => {
               <div>
                 <h4 className="font-medium text-gray-900 mb-3">Depot Availability</h4>
                 <div className="space-y-2">
-                  {(['depot_a', 'depot_b', 'depot_c'] as const).map((depot) => (
+                  {(['depot_a', 'depot_b'] as const).map((depot) => (
                     <label key={depot} className="flex items-center gap-3">
                       <input
                         type="checkbox"
