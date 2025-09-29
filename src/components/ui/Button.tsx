@@ -15,12 +15,12 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     
     const variants = {
       primary: 'bg-primary-600 text-white hover:bg-primary-700',
-      secondary: 'bg-gray-200 text-gray-900 hover:bg-gray-300',
+      secondary: 'bg-gray-100 text-gray-900 hover:bg-gray-200',
       danger: 'bg-danger-600 text-white hover:bg-danger-700',
       success: 'bg-success-600 text-white hover:bg-success-700',
       warning: 'bg-warning-600 text-white hover:bg-warning-700',
-      outline: 'border border-gray-300 bg-white text-gray-900 hover:bg-gray-50',
-      ghost: 'text-gray-900 hover:bg-gray-100',
+      outline: 'border border-primary-200 bg-white text-primary-700 hover:bg-primary-50',
+      ghost: 'text-primary-700 hover:bg-primary-50',
     };
     
     const sizes = {

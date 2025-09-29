@@ -249,55 +249,63 @@ export const InductionDecisions: React.FC = () => {
           </Card>
         )}
 
-        {/* Main Content */}
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-          {/* Fleet Table */}
+        {/* Planning workspace */}
+        <section className="space-y-4">
           <div>
-            <FleetTable
-              selectedTrains={selectedTrains}
-              onTrainSelect={handleTrainSelect}
-              onTrainDeselect={handleTrainDeselect}
-            />
+            <h2 className="text-xl font-semibold text-gray-900">Planning workspace</h2>
+            <p className="text-gray-600">Prioritized induction and fleet details</p>
           </div>
-
-          {/* AI Recommendations */}
-          <div>
-            {currentRun ? (
-              <RankedList
-                results={currentRun.ranked}
-                fleet={fleet || []}
-                onDecision={handleDecision}
-                decisions={Object.fromEntries(
-                  decisions.map(d => [d.id, { 
-                    action: d.action, 
-                    note: d.note, 
-                    operator: d.operator, 
-                    timestamp: d.timestamp 
-                  }])
-                )}
-                loading={optimizeMutation.isPending}
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+            {/* Fleet Table */}
+            <div className="space-y-3">
+              <h3 className="text-base font-semibold text-gray-900">Fleet overview</h3>
+              <FleetTable
+                selectedTrains={selectedTrains}
+                onTrainSelect={handleTrainSelect}
+                onTrainDeselect={handleTrainDeselect}
               />
-            ) : (
-              <Card>
-                <CardContent className="flex items-center justify-center py-12">
-                  <div className="text-center">
-                    <Brain className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-lg font-medium text-gray-900 mb-2">No Optimization Results</h3>
-                    <p className="text-gray-600 mb-4">Run the AI optimizer to generate induction recommendations</p>
-                    <Button
-                      onClick={handleOptimize}
-                      loading={optimizeMutation.isPending}
-                      disabled={optimizeMutation.isPending}
-                    >
-                      <Play className="h-4 w-4 mr-2" />
-                      Start Optimization
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
+            </div>
+
+            {/* AI Recommendations */}
+            <div className="space-y-3">
+              <h3 className="text-base font-semibold text-gray-900">AI recommendations</h3>
+              {currentRun ? (
+                <RankedList
+                  results={currentRun.ranked}
+                  fleet={fleet || []}
+                  onDecision={handleDecision}
+                  decisions={Object.fromEntries(
+                    decisions.map(d => [d.id, { 
+                      action: d.action, 
+                      note: d.note, 
+                      operator: d.operator, 
+                      timestamp: d.timestamp 
+                    }])
+                  )}
+                  loading={optimizeMutation.isPending}
+                />
+              ) : (
+                <Card>
+                  <CardContent className="flex items-center justify-center py-12">
+                    <div className="text-center">
+                      <Brain className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                      <h3 className="text-lg font-medium text-gray-900 mb-2">No Optimization Results</h3>
+                      <p className="text-gray-600 mb-4">Run the AI optimizer to generate induction recommendations</p>
+                      <Button
+                        onClick={handleOptimize}
+                        loading={optimizeMutation.isPending}
+                        disabled={optimizeMutation.isPending}
+                      >
+                        <Play className="h-4 w-4 mr-2" />
+                        Start Optimization
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
           </div>
-        </div>
+        </section>
 
         {/* Optimization Results Meta */}
         {currentRun && (

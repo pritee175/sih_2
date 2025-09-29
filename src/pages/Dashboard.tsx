@@ -27,6 +27,7 @@ export const Dashboard: React.FC = () => {
     );
   }
 
+  // Guard against missing data or fetch errors
   if (error || !kpis) {
     return (
       <Layout>
@@ -41,7 +42,7 @@ export const Dashboard: React.FC = () => {
 
   return (
     <Layout>
-      <div className="space-y-6">
+      <div className="space-y-8">
         {/* Page Header */}
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
@@ -50,34 +51,46 @@ export const Dashboard: React.FC = () => {
           </p>
         </div>
 
-        {/* Fleet Overview and Recent Alerts */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2">
-            <FleetOverview />
-          </div>
+        {/* At a glance */}
+        <section className="space-y-4">
           <div>
-            <RecentAlerts />
+            <h2 className="text-xl font-semibold text-gray-900">At a glance</h2>
+            <p className="text-gray-600">Key utilization across depots</p>
           </div>
-        </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {Object.entries(kpis.depot_utilization)
+              .filter(([key]) => key !== 'average')
+              .map(([depot, utilization]) => (
+                <KPIWidget
+                  key={depot}
+                  title={`Depot ${depot.toUpperCase()} Utilization`}
+                  value={utilization}
+                  target={85}
+                  trend="stable"
+                  format="percentage"
+                  icon={<Activity className="h-5 w-5" />}
+                  description="Current depot utilization"
+                  className="lg:col-span-1"
+                />
+              ))}
+          </div>
+        </section>
 
-        {/* Depot Utilization Details */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {Object.entries(kpis.depot_utilization)
-            .filter(([key]) => key !== 'average')
-            .map(([depot, utilization]) => (
-              <KPIWidget
-                key={depot}
-                title={`Depot ${depot.toUpperCase()} Utilization`}
-                value={utilization}
-                target={85}
-                trend="stable"
-                format="percentage"
-                icon={<Activity className="h-5 w-5" />}
-                description="Current depot utilization"
-                className="lg:col-span-1"
-              />
-            ))}
-        </div>
+        {/* Fleet Overview and Recent Alerts */}
+        <section className="space-y-4">
+          <div>
+            <h2 className="text-xl font-semibold text-gray-900">Operations overview</h2>
+            <p className="text-gray-600">Fleet status and recent alerts</p>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2">
+              <FleetOverview />
+            </div>
+            <div>
+              <RecentAlerts />
+            </div>
+          </div>
+        </section>
 
         {/* Quick Actions */}
         <div className="bg-white rounded-lg border border-gray-200 p-6">
@@ -111,6 +124,4 @@ export const Dashboard: React.FC = () => {
       </div>
     </Layout>
   );
-};
-
-
+}

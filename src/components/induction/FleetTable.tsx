@@ -128,10 +128,10 @@ export const FleetTable: React.FC<FleetTableProps> = ({
       </CardHeader>
       <CardContent>
         <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
+          <table className="w-full text-sm">
+            <thead className="bg-gray-50 text-gray-700">
               <tr className="border-b border-gray-200">
-                <th className="text-left py-3 px-2">
+                <th className="text-left py-3 px-3 font-medium">
                   <input
                     type="checkbox"
                     checked={selectedTrains.length === filteredAndSortedFleet.length && filteredAndSortedFleet.length > 0}
@@ -145,7 +145,7 @@ export const FleetTable: React.FC<FleetTableProps> = ({
                     className="rounded border-gray-300"
                   />
                 </th>
-                <th className="text-left py-3 px-2">
+                <th className="text-left py-3 px-3 uppercase tracking-wide text-xs font-semibold text-gray-600">
                   <button
                     onClick={() => handleSort('id')}
                     className="flex items-center gap-1 hover:text-primary-600"
@@ -154,7 +154,7 @@ export const FleetTable: React.FC<FleetTableProps> = ({
                     {getSortIcon('id')}
                   </button>
                 </th>
-                <th className="text-left py-3 px-2">
+                <th className="text-left py-3 px-3 uppercase tracking-wide text-xs font-semibold text-gray-600">
                   <button
                     onClick={() => handleSort('depot')}
                     className="flex items-center gap-1 hover:text-primary-600"
@@ -163,7 +163,7 @@ export const FleetTable: React.FC<FleetTableProps> = ({
                     {getSortIcon('depot')}
                   </button>
                 </th>
-                <th className="text-left py-3 px-2">
+                <th className="text-left py-3 px-3 uppercase tracking-wide text-xs font-semibold text-gray-600">
                   <button
                     onClick={() => handleSort('mileage_km')}
                     className="flex items-center gap-1 hover:text-primary-600"
@@ -172,7 +172,7 @@ export const FleetTable: React.FC<FleetTableProps> = ({
                     {getSortIcon('mileage_km')}
                   </button>
                 </th>
-                <th className="text-left py-3 px-2">
+                <th className="text-left py-3 px-3 uppercase tracking-wide text-xs font-semibold text-gray-600">
                   <button
                     onClick={() => handleSort('fitness_score')}
                     className="flex items-center gap-1 hover:text-primary-600"
@@ -181,7 +181,7 @@ export const FleetTable: React.FC<FleetTableProps> = ({
                     {getSortIcon('fitness_score')}
                   </button>
                 </th>
-                <th className="text-left py-3 px-2">
+                <th className="text-left py-3 px-3 uppercase tracking-wide text-xs font-semibold text-gray-600">
                   <button
                     onClick={() => handleSort('last_maintenance')}
                     className="flex items-center gap-1 hover:text-primary-600"
@@ -190,7 +190,7 @@ export const FleetTable: React.FC<FleetTableProps> = ({
                     {getSortIcon('last_maintenance')}
                   </button>
                 </th>
-                <th className="text-left py-3 px-2">
+                <th className="text-left py-3 px-3 uppercase tracking-wide text-xs font-semibold text-gray-600">
                   <button
                     onClick={() => handleSort('branding_campaign')}
                     className="flex items-center gap-1 hover:text-primary-600"
@@ -199,7 +199,7 @@ export const FleetTable: React.FC<FleetTableProps> = ({
                     {getSortIcon('branding_campaign')}
                   </button>
                 </th>
-                <th className="text-left py-3 px-2">Status</th>
+                <th className="text-left py-3 px-3 uppercase tracking-wide text-xs font-semibold text-gray-600">Status</th>
               </tr>
             </thead>
             <tbody>
@@ -210,7 +210,7 @@ export const FleetTable: React.FC<FleetTableProps> = ({
                     selectedTrains.includes(train.id) ? 'bg-primary-50' : ''
                   }`}
                 >
-                  <td className="py-3 px-2">
+                  <td className="py-3 px-3">
                     <input
                       type="checkbox"
                       checked={selectedTrains.includes(train.id)}
@@ -218,26 +218,26 @@ export const FleetTable: React.FC<FleetTableProps> = ({
                       className="rounded border-gray-300"
                     />
                   </td>
-                  <td className="py-3 px-2 font-medium text-gray-900">{train.id}</td>
-                  <td className="py-3 px-2">
+                  <td className="py-3 px-3 font-medium text-gray-900">{train.id}</td>
+                  <td className="py-3 px-3">
                     <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getDepotColor(train.depot)}`}>
                       {train.depot}
                     </span>
                   </td>
-                  <td className="py-3 px-2">
+                  <td className="py-3 px-3">
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${getMileageColor(train.mileage_km)}`}>
                       {formatNumber(train.mileage_km)} km
                     </span>
                   </td>
-                  <td className="py-3 px-2">
+                  <td className="py-3 px-3">
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${getFitnessScoreColor(train.fitness_score)}`}>
                       {formatNumber(train.fitness_score * 100, 1)}%
                     </span>
                   </td>
-                  <td className="py-3 px-2 text-sm text-gray-600">
+                  <td className="py-3 px-3 text-sm text-gray-600">
                     {formatDate(train.last_maintenance)}
                   </td>
-                  <td className="py-3 px-2">
+                  <td className="py-3 px-3">
                     {train.branding_campaign ? (
                       <span className="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">
                         {train.branding_campaign}
@@ -246,7 +246,7 @@ export const FleetTable: React.FC<FleetTableProps> = ({
                       <span className="text-gray-400 text-xs">None</span>
                     )}
                   </td>
-                  <td className="py-3 px-2">
+                  <td className="py-3 px-3">
                     <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(train.available ? 'available' : 'unavailable')}`}>
                       {train.available ? 'Available' : 'Unavailable'}
                     </span>

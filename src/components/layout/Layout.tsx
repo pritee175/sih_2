@@ -10,7 +10,7 @@ interface LayoutProps {
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { isSidebarOpen, closeSidebar } = useUIStore();
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       {/* Fixed Top Header */}
       <Header />
       <div className="flex">

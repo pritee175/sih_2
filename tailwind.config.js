@@ -8,17 +8,31 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Kochi Metro inspired teal primary
         primary: {
-          50: '#eff6ff',
-          100: '#dbeafe',
-          200: '#bfdbfe',
-          300: '#93c5fd',
-          400: '#60a5fa',
-          500: '#3b82f6',
-          600: '#2563eb',
-          700: '#1d4ed8',
-          800: '#1e40af',
-          900: '#1e3a8a',
+          50: '#f0fdfa',
+          100: '#ccfbf1',
+          200: '#99f6e4',
+          300: '#5eead4',
+          400: '#2dd4bf',
+          500: '#14b8a6',
+          600: '#0d9488',
+          700: '#0f766e',
+          800: '#115e59',
+          900: '#134e4a',
+        },
+        // Deep navy secondary for headers/nav
+        navy: {
+          50: '#e6eef4',
+          100: '#c5d6e3',
+          200: '#9fbace',
+          300: '#789eb8',
+          400: '#4f7f9d',
+          500: '#356786',
+          600: '#234f6d',
+          700: '#183e57',
+          800: '#102e42',
+          900: '#0b2435',
         },
         metro: {
           50: '#f0f9ff',
@@ -82,7 +96,7 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['Montserrat', 'Inter', 'system-ui', 'sans-serif'],
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',

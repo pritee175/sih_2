@@ -61,19 +61,24 @@ export const KPIWidget: React.FC<KPIWidgetProps> = ({
   const targetGap = Math.abs(value - target);
 
   return (
-    <Card className={cn('hover:shadow-md transition-shadow', className)}>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium text-gray-600">
-          {title}
-        </CardTitle>
-        <div className="text-gray-400">
+    <Card className={cn('hover:shadow transition-shadow', className)}>
+      <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-3">
+        <div>
+          <CardTitle className="text-sm font-medium text-gray-700">
+            {title}
+          </CardTitle>
+          {description && (
+            <p className="mt-1 text-xs text-gray-500">{description}</p>
+          )}
+        </div>
+        <div className="h-9 w-9 rounded-full bg-primary-50 text-primary-600 flex items-center justify-center">
           {icon}
         </div>
       </CardHeader>
       <CardContent>
-        <div className="space-y-2">
-          <div className="flex items-baseline gap-2">
-            <span className="text-2xl font-bold text-gray-900">
+        <div className="space-y-3">
+          <div className="flex items-baseline gap-3">
+            <span className="text-2xl font-semibold text-gray-900">
               {formatValue(value)}
             </span>
             <div className={cn('flex items-center gap-1', getTrendColor())}>
@@ -83,11 +88,11 @@ export const KPIWidget: React.FC<KPIWidgetProps> = ({
               </span>
             </div>
           </div>
-          
+
           <div className="flex items-center justify-between text-sm">
             <div className="flex items-center gap-1">
               <Target className="h-3 w-3 text-gray-400" />
-              <span className="text-gray-500">Target: {formatValue(target)}</span>
+              <span className="text-gray-600">Target: {formatValue(target)}</span>
             </div>
             <span className={cn(
               'font-medium',
@@ -96,19 +101,12 @@ export const KPIWidget: React.FC<KPIWidgetProps> = ({
               {isAboveTarget ? '+' : '-'}{formatValue(targetGap)}
             </span>
           </div>
-          
-          {description && (
-            <p className="text-xs text-gray-500 mt-2">
-              {description}
-            </p>
-          )}
-          
+
           {/* Progress bar */}
-          <div className="w-full bg-gray-200 rounded-full h-2 mt-3">
+          <div className="w-full bg-gray-100 rounded-full h-2 mt-2">
             <div
               className={cn(
-                'h-2 rounded-full transition-all duration-300',
-                isAboveTarget ? 'bg-success-500' : 'bg-warning-500'
+                'h-2 rounded-full transition-all duration-300 bg-primary-500'
               )}
               style={{ width: `${Math.min((value / target) * 100, 100)}%` }}
             />
