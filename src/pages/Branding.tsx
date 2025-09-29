@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Layout } from '../components/layout/Layout';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
-import { useBrandingCampaigns, useFleet } from '../hooks/useApi';
+import { useBrandingCampaigns, useFleet, useCreateBrandingCampaign } from '../hooks/useApi';
 import { formatDate, formatPercentage } from '../utils';
 import { 
   Megaphone, 
@@ -18,7 +18,20 @@ import { Loader2 } from 'lucide-react';
 export const Branding: React.FC = () => {
   const { data: campaigns, isLoading: campaignsLoading } = useBrandingCampaigns();
   const { data: fleet, isLoading: fleetLoading } = useFleet();
+  const createCampaign = useCreateBrandingCampaign();
   // const [selectedCampaign, setSelectedCampaign] = useState<string | null>(null);
+  const [showForm, setShowForm] = useState(false);
+  const [form, setForm] = useState({
+    name: '',
+    description: '',
+    priority: 5,
+    start_date: new Date().toISOString().split('T')[0],
+    end_date: new Date(Date.now() + 30*24*60*60*1000).toISOString().split('T')[0],
+    status: 'active',
+    visibility_score: 0.7,
+    target_trains: [] as string[],
+  });
+  const [formError, setFormError] = useState<string | null>(null);
 
   const isLoading = campaignsLoading || fleetLoading;
 
@@ -77,6 +90,40 @@ export const Branding: React.FC = () => {
   const activeCampaigns = campaigns?.filter(c => getCampaignStatus(c) === 'active').length || 0;
   const totalTrainsWithBranding = campaigns?.reduce((acc, c) => acc + c.target_trains.length, 0) || 0;
 
+  const resetForm = () => {
+    setForm({
+      name: '', description: '', priority: 5,
+      start_date: new Date().toISOString().split('T')[0],
+      end_date: new Date(Date.now() + 30*24*60*60*1000).toISOString().split('T')[0],
+      status: 'active', visibility_score: 0.7, target_trains: [],
+    });
+    setFormError(null);
+  };
+
+  const handleNewCampaignClick = () => {
+    resetForm();
+    setShowForm(true);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormError(null);
+    if (!form.name.trim()) { setFormError('Please enter a campaign name'); return; }
+    if (!form.start_date || !form.end_date) { setFormError('Please provide start and end dates'); return; }
+    try {
+      await createCampaign.mutateAsync({
+        name: form.name.trim(), description: form.description.trim(), priority: Number(form.priority),
+        start_date: form.start_date, end_date: form.end_date,
+        target_trains: form.target_trains, status: form.status as any,
+        visibility_score: Number(form.visibility_score),
+      } as any);
+      setShowForm(false);
+      resetForm();
+    } catch (err: any) {
+      setFormError(err?.message || 'Failed to create campaign');
+    }
+  };
+
   return (
     <Layout>
       <div className="space-y-6">
@@ -88,11 +135,134 @@ export const Branding: React.FC = () => {
               Manage advertising campaigns and train branding assignments
             </p>
           </div>
-          <Button className="flex items-center gap-2">
+          <Button className="flex items-center gap-2" onClick={handleNewCampaignClick}>
             <Plus className="h-4 w-4" />
             New Campaign
           </Button>
         </div>
+
+        {/* New Campaign Form */}
+        {showForm && (
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Megaphone className="h-5 w-5" />
+                Create Branding Campaign
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm text-gray-700 mb-1">Name</label>
+                  <input
+                    type="text"
+                    value={form.name}
+                    onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    placeholder="AdCampaignX"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-700 mb-1">Priority</label>
+                  <input
+                    type="number"
+                    min={1}
+                    max={10}
+                    value={form.priority}
+                    onChange={(e) => setForm((f) => ({ ...f, priority: Number(e.target.value) }))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-700 mb-1">Start Date</label>
+                  <input
+                    type="date"
+                    value={form.start_date}
+                    onChange={(e) => setForm((f) => ({ ...f, start_date: e.target.value }))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-700 mb-1">End Date</label>
+                  <input
+                    type="date"
+                    value={form.end_date}
+                    onChange={(e) => setForm((f) => ({ ...f, end_date: e.target.value }))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-sm text-gray-700 mb-1">Description</label>
+                  <textarea
+                    value={form.description}
+                    onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    rows={3}
+                    placeholder="Campaign details"
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-sm text-gray-700 mb-1">Target Trains</label>
+                  <div className="flex flex-wrap gap-2">
+                    {(fleet || []).map((t) => {
+                      const checked = form.target_trains.includes(t.id);
+                      return (
+                        <label key={t.id} className="flex items-center gap-1 text-xs px-2 py-1 border rounded cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={checked}
+                            onChange={(e) => {
+                              setForm((f) => ({
+                                ...f,
+                                target_trains: e.target.checked
+                                  ? [...f.target_trains, t.id]
+                                  : f.target_trains.filter((id) => id !== t.id)
+                              }));
+                            }}
+                          />
+                          {t.id}
+                        </label>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-700 mb-1">Status</label>
+                  <select
+                    value={form.status}
+                    onChange={(e) => setForm((f) => ({ ...f, status: e.target.value }))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  >
+                    <option value="active">active</option>
+                    <option value="paused">paused</option>
+                    <option value="completed">completed</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-700 mb-1">Visibility Score (0-1)</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    min={0}
+                    max={1}
+                    value={form.visibility_score}
+                    onChange={(e) => setForm((f) => ({ ...f, visibility_score: Number(e.target.value) }))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  />
+                </div>
+
+                {formError && (
+                  <div className="md:col-span-2 text-danger-600 text-sm">{formError}</div>
+                )}
+
+                <div className="md:col-span-2 flex gap-2">
+                  <Button type="submit" loading={createCampaign.isPending}>Create</Button>
+                  <Button type="button" variant="outline" onClick={() => setShowForm(false)}>Cancel</Button>
+                </div>
+              </form>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Campaign Summary */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

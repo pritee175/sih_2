@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Layout } from '../components/layout/Layout';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
-import { useMaintenance, useFleet } from '../hooks/useApi';
+import { useMaintenance, useFleet, useCreateMaintenance } from '../hooks/useApi';
 import { formatDate, formatRelativeTime, getSeverityColor } from '../utils';
 import { MaintenanceJob } from '../types';
 import { 
@@ -19,10 +19,21 @@ import { Loader2 } from 'lucide-react';
 
 export const Maintenance: React.FC = () => {
   const { data: maintenanceJobs, isLoading: maintenanceLoading } = useMaintenance();
-  const { isLoading: fleetLoading } = useFleet();
+  const { data: fleet, isLoading: fleetLoading } = useFleet();
+  const createMaintenance = useCreateMaintenance();
   const [selectedDepot, setSelectedDepot] = useState<string>('all');
   const [selectedStatus, setSelectedStatus] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [showForm, setShowForm] = useState(false);
+  const [form, setForm] = useState({
+    train_id: '',
+    depot: 'A',
+    expected_days: 1,
+    priority: 'medium',
+    description: '',
+    assigned_crew: ''
+  });
+  const [formError, setFormError] = useState<string | null>(null);
 
   const isLoading = maintenanceLoading || fleetLoading;
 
@@ -90,6 +101,44 @@ export const Maintenance: React.FC = () => {
 
   const depotStats = getDepotStats();
 
+  const resetForm = () => {
+    setForm({ train_id: '', depot: 'A', expected_days: 1, priority: 'medium', description: '', assigned_crew: '' });
+    setFormError(null);
+  };
+
+  const handleScheduleClick = () => {
+    resetForm();
+    setShowForm(true);
+  };
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormError(null);
+    if (!form.train_id) {
+      setFormError('Please select a Train ID');
+      return;
+    }
+    if (!form.description.trim()) {
+      setFormError('Please enter a short description');
+      return;
+    }
+    try {
+      await createMaintenance.mutateAsync({
+        train_id: form.train_id,
+        depot: form.depot,
+        expected_days: Number(form.expected_days) || 1,
+        priority: form.priority as any,
+        description: form.description.trim(),
+        assigned_crew: form.assigned_crew || undefined,
+        status: 'pending',
+      } as any);
+      setShowForm(false);
+      resetForm();
+    } catch (err: any) {
+      setFormError(err?.message || 'Failed to create maintenance job');
+    }
+  };
+
   if (isLoading) {
     return (
       <Layout>
@@ -114,11 +163,103 @@ export const Maintenance: React.FC = () => {
               Manage maintenance schedules and depot operations
             </p>
           </div>
-          <Button className="flex items-center gap-2">
+          <Button className="flex items-center gap-2" onClick={handleScheduleClick}>
             <Plus className="h-4 w-4" />
             Schedule Maintenance
           </Button>
         </div>
+
+        {/* Schedule Maintenance Form */}
+        {showForm && (
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Wrench className="h-5 w-5" />
+                Create Maintenance Job
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleFormSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm text-gray-700 mb-1">Train ID</label>
+                  <select
+                    value={form.train_id}
+                    onChange={(e) => setForm((f) => ({ ...f, train_id: e.target.value }))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  >
+                    <option value="">Select train</option>
+                    {(fleet || []).map((t) => (
+                      <option key={t.id} value={t.id}>{t.id} (Depot {t.depot})</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-700 mb-1">Depot</label>
+                  <select
+                    value={form.depot}
+                    onChange={(e) => setForm((f) => ({ ...f, depot: e.target.value }))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  >
+                    <option value="A">Depot A</option>
+                    <option value="B">Depot B</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-700 mb-1">Expected Days</label>
+                  <input
+                    type="number"
+                    min={1}
+                    value={form.expected_days}
+                    onChange={(e) => setForm((f) => ({ ...f, expected_days: Number(e.target.value) }))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-700 mb-1">Priority</label>
+                  <select
+                    value={form.priority}
+                    onChange={(e) => setForm((f) => ({ ...f, priority: e.target.value }))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  >
+                    <option value="low">low</option>
+                    <option value="medium">medium</option>
+                    <option value="high">high</option>
+                    <option value="urgent">urgent</option>
+                  </select>
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-sm text-gray-700 mb-1">Description</label>
+                  <textarea
+                    value={form.description}
+                    onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    rows={3}
+                    placeholder="E.g. Brake system inspection"
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-sm text-gray-700 mb-1">Assigned Crew (optional)</label>
+                  <input
+                    type="text"
+                    value={form.assigned_crew}
+                    onChange={(e) => setForm((f) => ({ ...f, assigned_crew: e.target.value }))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    placeholder="Crew-A1"
+                  />
+                </div>
+
+                {formError && (
+                  <div className="md:col-span-2 text-danger-600 text-sm">{formError}</div>
+                )}
+
+                <div className="md:col-span-2 flex gap-2">
+                  <Button type="submit" loading={createMaintenance.isPending}>Create</Button>
+                  <Button type="button" variant="outline" onClick={() => setShowForm(false)}>Cancel</Button>
+                </div>
+              </form>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Depot Overview */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

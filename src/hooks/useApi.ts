@@ -70,6 +70,16 @@ export const useMaintenance = () => {
   });
 };
 
+export const useCreateMaintenance = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: api.createMaintenance,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.maintenance });
+    },
+  });
+};
+
 // Alerts hooks
 export const useAlerts = () => {
   return useQuery({
@@ -86,6 +96,16 @@ export const useBrandingCampaigns = () => {
     queryKey: queryKeys.brandingCampaigns,
     queryFn: api.getBrandingCampaigns,
     staleTime: 10 * 60 * 1000, // 10 minutes
+  });
+};
+
+export const useCreateBrandingCampaign = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: api.createBrandingCampaign,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.brandingCampaigns });
+    },
   });
 };
 

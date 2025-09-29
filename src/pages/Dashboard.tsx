@@ -87,18 +87,34 @@ export const Dashboard: React.FC = () => {
           </div>
         </section>
 
-        {/* Fleet Overview and Recent Alerts */}
+        {/* Fleet Overview - Full Width */}
         <section className="space-y-4">
           <div>
-            <h2 className="text-xl font-semibold text-gray-900">Operations overview</h2>
-            <p className="text-gray-600">Fleet status and recent alerts</p>
+            <h2 className="text-xl font-semibold text-gray-900">Fleet Overview</h2>
+            <p className="text-gray-600">Comprehensive status of all trains in the fleet</p>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2">
-              <FleetOverview />
+          <div className="w-full">
+            <FleetOverview />
+          </div>
+        </section>
+
+        {/* Recent Alerts and AI Recommendations below Fleet Overview */}
+        <section className="space-y-4 mt-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h2 className="text-lg font-semibold text-gray-900 mb-2">Recent Alerts</h2>
+              <RecentAlerts />
             </div>
             <div>
-              <RecentAlerts />
+              <h2 className="text-lg font-semibold text-gray-900 mb-2">AI Recommendations</h2>
+              <div className="bg-white rounded-lg border border-gray-200 p-4 text-gray-700 text-sm shadow-sm">
+                <ul className="list-disc pl-5 space-y-2">
+                  <li>Optimize train allocation to maximize availability during peak hours.</li>
+                  <li>Schedule preventive maintenance for trains with fitness score below 0.8.</li>
+                  <li>Monitor depot utilization to avoid overloading a single depot.</li>
+                  <li>Review recent alerts for critical maintenance issues.</li>
+                </ul>
+              </div>
             </div>
           </div>
         </section>

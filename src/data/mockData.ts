@@ -34,10 +34,18 @@ export const mockMaintenanceJobs: MaintenanceJob[] = [
 ];
 
 export const mockAlerts: Alert[] = [
-  { id: 'A01', train_id: 'T12', type: 'fitness_fail', severity: 'critical', timestamp: '2025-09-18T21:40:00Z', message: 'Fitness certificate expired - immediate attention required', resolved: false },
-  { id: 'A02', train_id: 'T14', type: 'maintenance_overdue', severity: 'high', timestamp: '2025-09-18T20:15:00Z', message: 'Maintenance overdue by 3 days', resolved: false },
-  { id: 'A03', train_id: 'T09', type: 'fitness_fail', severity: 'medium', timestamp: '2025-09-18T19:30:00Z', message: 'Fitness score below threshold', resolved: true, resolved_by: 'supervisor1', resolved_at: '2025-09-18T20:00:00Z' },
-  { id: 'A04', train_id: 'T19', type: 'maintenance_overdue', severity: 'critical', timestamp: '2025-09-18T18:45:00Z', message: 'Critical maintenance overdue', resolved: false },
+  // Critical maintenance required
+  { id: 'A01', train_id: 'T03', type: 'maintenance_overdue', severity: 'critical', timestamp: '2025-09-18T21:40:00Z', message: 'Maintenance required', resolved: false },
+  { id: 'A02', train_id: 'T06', type: 'maintenance_overdue', severity: 'critical', timestamp: '2025-09-18T21:35:00Z', message: 'Maintenance required', resolved: false },
+  { id: 'A03', train_id: 'T12', type: 'maintenance_overdue', severity: 'critical', timestamp: '2025-09-18T21:30:00Z', message: 'Maintenance required', resolved: false },
+  { id: 'A04', train_id: 'T19', type: 'maintenance_overdue', severity: 'critical', timestamp: '2025-09-18T21:25:00Z', message: 'Maintenance required', resolved: false },
+  { id: 'A05', train_id: 'T22', type: 'maintenance_overdue', severity: 'critical', timestamp: '2025-09-18T21:20:00Z', message: 'Maintenance required', resolved: false },
+  // Critical fitness
+  { id: 'A06', train_id: 'T07', type: 'fitness_fail', severity: 'critical', timestamp: '2025-09-18T21:15:00Z', message: 'Fitness critical', resolved: false },
+  { id: 'A07', train_id: 'T23', type: 'fitness_fail', severity: 'critical', timestamp: '2025-09-18T21:10:00Z', message: 'Fitness critical', resolved: false },
+  // High priority maintenance overdue
+  { id: 'A08', train_id: 'T01', type: 'maintenance_overdue', severity: 'high', timestamp: '2025-09-18T21:05:00Z', message: 'Maintenance overdue by 10 days', resolved: false },
+  { id: 'A09', train_id: 'T10', type: 'maintenance_overdue', severity: 'high', timestamp: '2025-09-18T21:00:00Z', message: 'Maintenance overdue by 31 days', resolved: false },
 ];
 
 export const mockBrandingCampaigns: BrandingCampaign[] = [
@@ -63,9 +71,9 @@ export const mockKPIMetrics: KPIMetrics = {
     trend: 'up'
   },
   depot_utilization: {
-    depot_a: 80.0,
-    depot_b: 80.0,
-    average: 80.0
+    depot_a: 72.7,
+    depot_b: 69.2,
+    average: 70.8
   }
 };
 

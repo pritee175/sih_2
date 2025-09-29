@@ -101,6 +101,15 @@ export const api = {
     return handleResponse<MaintenanceJob[]>(response);
   },
 
+  async createMaintenance(job: Omit<MaintenanceJob, 'id'>): Promise<MaintenanceJob> {
+    const response = await fetch(`${API_BASE_URL}/maintenance`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(job),
+    });
+    return handleResponse<MaintenanceJob>(response);
+  },
+
   // Alerts endpoints
   async getAlerts(): Promise<Alert[]> {
     const response = await fetch(`${API_BASE_URL}/alerts`);
@@ -111,6 +120,15 @@ export const api = {
   async getBrandingCampaigns(): Promise<BrandingCampaign[]> {
     const response = await fetch(`${API_BASE_URL}/branding-campaigns`);
     return handleResponse<BrandingCampaign[]>(response);
+  },
+
+  async createBrandingCampaign(campaign: Omit<BrandingCampaign, 'id'>): Promise<BrandingCampaign> {
+    const response = await fetch(`${API_BASE_URL}/branding-campaigns`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(campaign),
+    });
+    return handleResponse<BrandingCampaign>(response);
   },
 
   // KPI endpoints

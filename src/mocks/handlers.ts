@@ -1,21 +1,39 @@
 import { http, HttpResponse } from 'msw';
 import { mockTrainsets, mockMaintenanceJobs, mockAlerts, mockBrandingCampaigns, mockKPIMetrics, mockUsers } from '../data/mockData';
-import { OptimizationRun, DecisionSnapshot, SimulationResult } from '../types';
+import { OptimizationRun, DecisionSnapshot, SimulationResult, MaintenanceJob, BrandingCampaign } from '../types';
 
-// Mock optimization results
+// Mock optimization results aligned to user's AI Recommendation Table
 const mockOptimizationResults: OptimizationRun = {
   run_id: 'r123',
   date: '2025-09-18',
   ranked: [
-    { id: 'T03', score: 0.91, confidence: 0.85, reasons: ['low-mileage', 'valid-fitness', 'depot balance ok'], conflicts: [], depot_balance_impact: 0.8, branding_priority: 8 },
-    { id: 'T06', score: 0.89, confidence: 0.82, reasons: ['excellent-fitness', 'recent-maintenance', 'depot capacity available'], conflicts: [], depot_balance_impact: 0.7, branding_priority: 0 },
-    { id: 'T01', score: 0.87, confidence: 0.78, reasons: ['good-fitness', 'branding-campaign', 'depot balance ok'], conflicts: [], depot_balance_impact: 0.6, branding_priority: 8 },
-    { id: 'T08', score: 0.85, confidence: 0.75, reasons: ['solid-fitness', 'no-maintenance-flag', 'depot capacity available'], conflicts: [], depot_balance_impact: 0.5, branding_priority: 0 },
-    { id: 'T15', score: 0.83, confidence: 0.72, reasons: ['good-fitness', 'branding-campaign', 'depot balance ok'], conflicts: [], depot_balance_impact: 0.4, branding_priority: 8 },
+    { id: 'T13', score: 0.874, confidence: 0.82, reasons: ['high-fitness', 'low-mileage'], conflicts: [], depot_balance_impact: 0.6, branding_priority: 0 },
+    { id: 'T05', score: 0.861, confidence: 0.8, reasons: ['high-fitness'], conflicts: [], depot_balance_impact: 0.5, branding_priority: 0 },
+    { id: 'T21', score: 0.861, confidence: 0.8, reasons: ['high-fitness'], conflicts: [], depot_balance_impact: 0.5, branding_priority: 0 },
+    { id: 'T14', score: 0.847, confidence: 0.79, reasons: ['branding-campaign', 'good-fitness'], conflicts: [], depot_balance_impact: 0.5, branding_priority: 8 },
+    { id: 'T17', score: 0.836, confidence: 0.78, reasons: ['branding-campaign', 'good-fitness'], conflicts: [], depot_balance_impact: 0.5, branding_priority: 8 },
+    { id: 'T01', score: 0.836, confidence: 0.78, reasons: ['branding-campaign', 'good-fitness'], conflicts: [], depot_balance_impact: 0.5, branding_priority: 8 },
+    { id: 'T16', score: 0.824, confidence: 0.77, reasons: ['branding-campaign', 'good-fitness'], conflicts: [], depot_balance_impact: 0.5, branding_priority: 8 },
+    { id: 'T11', score: 0.824, confidence: 0.77, reasons: ['branding-campaign', 'good-fitness'], conflicts: [], depot_balance_impact: 0.5, branding_priority: 8 },
+    { id: 'T08', score: 0.821, confidence: 0.75, reasons: ['solid-fitness', 'recent-maintenance'], conflicts: [], depot_balance_impact: 0.4, branding_priority: 8 },
+    { id: 'T24', score: 0.821, confidence: 0.75, reasons: ['solid-fitness', 'recent-maintenance'], conflicts: [], depot_balance_impact: 0.4, branding_priority: 8 },
+    { id: 'T15', score: 0.805, confidence: 0.74, reasons: ['branding-campaign'], conflicts: [], depot_balance_impact: 0.4, branding_priority: 9 },
+    { id: 'T18', score: 0.804, confidence: 0.73, reasons: ['branding-campaign'], conflicts: [], depot_balance_impact: 0.4, branding_priority: 6 },
+    { id: 'T20', score: 0.799, confidence: 0.72, reasons: ['good-fitness'], conflicts: [], depot_balance_impact: 0.4, branding_priority: 0 },
+    { id: 'T09', score: 0.796, confidence: 0.7, reasons: ['branding-campaign'], conflicts: [], depot_balance_impact: 0.4, branding_priority: 7 },
+    { id: 'T10', score: 0.777, confidence: 0.69, reasons: ['branding-campaign'], conflicts: [], depot_balance_impact: 0.3, branding_priority: 6 },
+    { id: 'T04', score: 0.766, confidence: 0.68, reasons: ['good-fitness'], conflicts: [], depot_balance_impact: 0.3, branding_priority: 0 },
+    { id: 'T02', score: 0.756, confidence: 0.67, reasons: ['branding-campaign'], conflicts: [], depot_balance_impact: 0.3, branding_priority: 6 },
+    { id: 'T19', score: 0.0, confidence: 0.6, reasons: ['maintenance'], conflicts: [], depot_balance_impact: 0.0, branding_priority: 8 },
+    { id: 'T03', score: 0.0, confidence: 0.6, reasons: ['maintenance'], conflicts: [], depot_balance_impact: 0.0, branding_priority: 8 },
+    { id: 'T06', score: 0.0, confidence: 0.6, reasons: ['maintenance'], conflicts: [], depot_balance_impact: 0.0, branding_priority: 8 },
+    { id: 'T22', score: 0.0, confidence: 0.6, reasons: ['maintenance'], conflicts: [], depot_balance_impact: 0.0, branding_priority: 8 },
+    { id: 'T07', score: 0.0, confidence: 0.55, reasons: ['unavailable', 'fitness-critical'], conflicts: [], depot_balance_impact: 0.0, branding_priority: 6 },
+    { id: 'T23', score: 0.0, confidence: 0.55, reasons: ['unavailable', 'fitness-critical'], conflicts: [], depot_balance_impact: 0.0, branding_priority: 6 },
   ],
   meta: {
     execution_time_ms: 345,
-    total_trains: 25,
+    total_trains: 24,
     depot_balance: true,
     weighting: {
       reliability: 0.6,
@@ -59,7 +77,7 @@ export const handlers = [
 
   // Optimization endpoints
   http.post('/api/optimize', async ({ request }) => {
-    const body = await request.json();
+    await request.json();
     // Simulate processing delay
     await new Promise(resolve => setTimeout(resolve, 500));
     return HttpResponse.json(mockOptimizationResults);
@@ -67,7 +85,7 @@ export const handlers = [
 
   // Decision endpoints
   http.post('/api/decisions', async ({ request }) => {
-    const body = await request.json();
+    await request.json();
     // Simulate processing delay
     await new Promise(resolve => setTimeout(resolve, 300));
     return HttpResponse.json({ 
@@ -86,6 +104,25 @@ export const handlers = [
   http.get('/api/maintenance', () => {
     return HttpResponse.json(mockMaintenanceJobs);
   }),
+  http.post('/api/maintenance', async ({ request }) => {
+    const body = await request.json() as Partial<MaintenanceJob>;
+    // Simple ID generator
+    const nextNum = (mockMaintenanceJobs.length + 1).toString().padStart(2, '0');
+    const newJob: MaintenanceJob = {
+      id: `M${nextNum}`,
+      train_id: body.train_id || 'T01',
+      status: 'pending',
+      expected_days: body.expected_days ?? 1,
+      depot: body.depot || 'A',
+      priority: (body.priority as any) || 'medium',
+      description: body.description || 'Scheduled maintenance',
+      assigned_crew: body.assigned_crew,
+      start_date: body.start_date,
+      completion_date: body.completion_date,
+    };
+    mockMaintenanceJobs.push(newJob);
+    return HttpResponse.json(newJob, { status: 201 });
+  }),
 
   // Alerts endpoints
   http.get('/api/alerts', () => {
@@ -96,6 +133,23 @@ export const handlers = [
   http.get('/api/branding-campaigns', () => {
     return HttpResponse.json(mockBrandingCampaigns);
   }),
+  http.post('/api/branding-campaigns', async ({ request }) => {
+    const body = await request.json() as Partial<BrandingCampaign>;
+    const nextNum = (mockBrandingCampaigns.length + 1).toString().padStart(2, '0');
+    const newCampaign: BrandingCampaign = {
+      id: `BC${nextNum}`,
+      name: body.name || 'New Campaign',
+      description: body.description || '',
+      priority: body.priority ?? 5,
+      start_date: body.start_date || new Date().toISOString().split('T')[0],
+      end_date: body.end_date || new Date(Date.now() + 30*24*60*60*1000).toISOString().split('T')[0],
+      target_trains: body.target_trains || [],
+      status: (body.status as any) || 'active',
+      visibility_score: body.visibility_score ?? 0.7,
+    };
+    mockBrandingCampaigns.push(newCampaign);
+    return HttpResponse.json(newCampaign, { status: 201 });
+  }),
 
   // KPI endpoints
   http.get('/api/kpis', () => {
@@ -104,7 +158,7 @@ export const handlers = [
 
   // Simulation endpoints
   http.post('/api/simulate', async ({ request }) => {
-    const body = await request.json();
+    await request.json();
     // Simulate processing delay
     await new Promise(resolve => setTimeout(resolve, 800));
     
@@ -159,7 +213,7 @@ export const handlers = [
 
   // Export endpoints
   http.post('/api/export/csv', async ({ request }) => {
-    const body = await request.json();
+    await request.json();
     // Simulate file generation delay
     await new Promise(resolve => setTimeout(resolve, 1000));
     
@@ -171,7 +225,7 @@ export const handlers = [
   }),
 
   http.post('/api/export/pdf', async ({ request }) => {
-    const body = await request.json();
+    await request.json();
     // Simulate file generation delay
     await new Promise(resolve => setTimeout(resolve, 1500));
     
@@ -183,7 +237,7 @@ export const handlers = [
   }),
 
   // Ingestion endpoint (CSV Upload)
-  http.post('/api/ingest/:source', async ({ params, request }) => {
+  http.post('/api/ingest/:source', async ({ params, request: _request }) => {
     // Simulate processing delay
     await new Promise(resolve => setTimeout(resolve, 600));
     // For mocks, we won't parse the CSV; just return a plausible validation summary

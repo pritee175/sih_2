@@ -34,9 +34,9 @@ export const FleetOverview: React.FC = () => {
 
   // Calculate fleet statistics
   const totalTrains = fleet.length;
-  const availableTrains = fleet.filter(train => train.available).length;
-  const underMaintenance = fleet.filter(train => train.maintenance_flag || !train.available).length;
-  const standbyTrains = totalTrains - availableTrains - underMaintenance;
+  const availableTrains = fleet.filter(train => train.available && !train.maintenance_flag).length;
+  const underMaintenance = fleet.filter(train => train.maintenance_flag).length;
+  const unavailableTrains = fleet.filter(train => !train.available && !train.maintenance_flag).length;
 
   // Group by depot
   const depotStats = fleet.reduce((acc, train) => {
@@ -76,8 +76,8 @@ export const FleetOverview: React.FC = () => {
               <div className="text-sm text-success-600">Available</div>
             </div>
             <div className="text-center p-4 bg-warning-50 rounded-lg">
-              <div className="text-2xl font-bold text-warning-600">{standbyTrains}</div>
-              <div className="text-sm text-warning-600">Standby</div>
+              <div className="text-2xl font-bold text-warning-600">{unavailableTrains}</div>
+              <div className="text-sm text-warning-600">Unavailable</div>
             </div>
             <div className="text-center p-4 bg-danger-50 rounded-lg">
               <div className="text-2xl font-bold text-danger-600">{underMaintenance}</div>

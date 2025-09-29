@@ -243,13 +243,23 @@ export const FleetTable: React.FC<FleetTableProps> = ({
                         {train.branding_campaign}
                       </span>
                     ) : (
-                      <span className="text-gray-400 text-xs">None</span>
+                      <span className="text-gray-600 text-xs">-</span>
                     )}
                   </td>
                   <td className="py-3 px-3">
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(train.available ? 'available' : 'unavailable')}`}>
-                      {train.available ? 'Available' : 'Unavailable'}
-                    </span>
+                    {train.maintenance_flag ? (
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor('maintenance')}`}>
+                        Maintenance
+                      </span>
+                    ) : !train.available ? (
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor('unavailable')}`}>
+                        Unavailable
+                      </span>
+                    ) : (
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor('available')}`}>
+                        Available
+                      </span>
+                    )}
                   </td>
                 </tr>
               ))}
